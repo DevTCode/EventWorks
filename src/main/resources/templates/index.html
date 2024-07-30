@@ -1,0 +1,398 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+
+<head>
+    <title>EventWorks</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,700,700i" rel="stylesheet">
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{style/images/favicon.jpg}">
+    <link rel="stylesheet" th:href="@{/style/css/open-iconic-bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/style/css/animate.css}">
+
+    <link rel="stylesheet" th:href="@{/style/css/owl.carousel.min.css}">
+    <link rel="stylesheet" th:href="@{/style/css/owl.theme.default.min.css}">
+    <link rel="stylesheet" th:href="@{/style/css/magnific-popup.css}">
+
+    <link rel="stylesheet" th:href="@{/style/css/aos.css}">
+
+    <link rel="stylesheet" th:href="@{/style/css/ionicons.min.css}">
+
+    <link rel="stylesheet" th:href="@{/style/css/bootstrap-datepicker.css}">
+    <link rel="stylesheet" th:href="@{/style/css/jquery.timepicker.css}">
+
+
+    <link rel="stylesheet" th:href="@{/style/css/flaticon.css}">
+    <link rel="stylesheet" th:href="@{/style/css/icomoon.css}">
+    <link rel="stylesheet" th:href="@{/style/css/style.css}">
+</head>
+<body >
+<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+    <div class="container">
+        <a class="navbar-brand" href="#">EventWorks</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="oi oi-menu"></span> Menu
+        </button>
+        <div class="collapse navbar-collapse" id="ftco-nav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active"><a th:href="@{/client}" class="nav-link">Home</a></li>
+                <li class="nav-item"><a th:href="@{/showEvents}" class="nav-link">Evénements</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/showReservations}">Reservations</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-user-circle"></i> Mon compte
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <div th:each="lu : ${listcnx}">
+                            <h6 class="dropdown-header" style="text-align:center;color:brown">Connecté en tant que</h6>
+                            <span class="dropdown-item-text" th:text="${lu.username}" style="text-align:center"></span>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" th:href="@{/editProfile/{id}(id=${lu.id})}">Modifier le mot de passe</a>
+                        </div>
+                        <a class="dropdown-item" th:href="@{/logout}">Se déconnecter</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-toggle="modal" data-target="#notificationsModal">
+                        <i class="fa fa-bell"></i> Notifications <span class="badge badge-danger" th:text="${notifications.size()}"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<!-- END nav -->
+
+<!-- Modal pour afficher les notifications -->
+
+<div class="modal fade" id="notificationsModal" tabindex="-1" role="dialog" aria-labelledby="notificationsModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="notificationsModalLabel">Notifications</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ul>
+                    <li th:each="notification : ${notifications}" th:text="${notification}"></li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- END nav -->
+<section class="home-slider owl-carousel">
+    <div class="slider-item" style="background-image:url(https://planitswiss.com/wp-content/uploads/2019/07/Untitled-1.jpg);">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row no-gutters slider-text align-items-center justify-content-center">
+                <div class="col-md-12 ftco-animate text-center">
+                    <div class="text mb-5 pb-3">
+                        <h1 class="mb-3">Bienvenue dans EventWorks</h1>
+                        <h2>Réservez vos places pour vos événements en toute simplicité</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slider-item" style="background-image:url(https://innovrh.fr/wp-content/uploads/2021/10/pexels-belle-co-1000445-1500x430.jpg);">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row no-gutters slider-text align-items-center justify-content-center">
+                <div class="col-md-12 ftco-animate text-center">
+                    <div class="text mb-5 pb-3">
+                        <h1 class="mb-3">Rejoinez-Nous et Réserver dés maintenant</h1>
+                        <h2>Réservez et personnalisez vos places pour une journée memorable</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</br></br></br>
+
+<section class="ftco-section ftc-no-pb ftc-no-pt">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5 p-md-5 img img-2 d-flex justify-content-center align-items-center" style="background-image: url(https://img.freepik.com/premium-photo/hand-with-phone-records-live-music-festival-people-taking-photograph-with-smart-phone-concert_217236-10486.jpg?w=900);">
+
+            </div>
+            <div class="col-md-7 py-5 wrap-about pb-md-5 ftco-animate">
+                <div class="heading-section heading-section-wo-line pt-md-5 pl-md-5 mb-5">
+                    <div class="ml-md-0">
+                        <span class="subheading">Bienvenue dans notre Espace d'Événements</span>
+                        <h2 class="mb-4">Organisez Vos Événements avec Nous</h2>
+                    </div>
+                </div>
+                <div class="pb-md-5">
+                    <p>Découvrez notre plateforme pour l'organisation et la gestion d'événements.</p>
+                    <p>Nous vous offrons des solutions pour planifier et exécuter vos événements de manière efficace. Que ce soit pour des réunions, des conférences ou des célébrations spéciales, notre équipe est là pour vous aider à chaque étape du processus.</p>
+                    <ul class="ftco-social d-flex">
+                        <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
+                        <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
+                        <li class="ftco-animate"><a href="#"><span class="icon-google-plus"></span></a></li>
+                        <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<br><br>
+
+    <h1 style=" text-align:center;font-size:3rem;">NOS SERVICES</h1>
+
+<section class="ftco-section">
+    <div class="container">
+        <div class="row d-flex">
+            <div class="col-md-3 d-flex align-self-stretch ftco-animate">
+                <div class="media block-6 services py-4 d-block text-center">
+                    <div class="d-flex justify-content-center">
+                        <div class="icon d-flex align-items-center justify-content-center">
+                            <span class="flaticon-reception-bell"></span>
+                        </div>
+                    </div>
+                    <div class="media-body p-2 mt-2">
+                        <h3 class="heading mb-3">Espaces Événementiels</h3>
+                        <p>Réservez votre espace événementiel pour une expérience mémorable.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 d-flex align-self-stretch ftco-animate">
+                <div class="media block-6 services py-4 d-block text-center">
+                    <div class="d-flex justify-content-center">
+                        <div class="icon d-flex align-items-center justify-content-center">
+                            <span class="flaticon-serving-dish"></span>
+                        </div>
+                    </div>
+                    <div class="media-body p-2 mt-2">
+                        <h3 class="heading mb-3">Planification Facile</h3>
+                        <p>Organisez vos événements à l'avance avec notre système de réservation simple.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 d-flex align-self-stretch ftco-animate">
+                <div class="media block-6 services py-4 d-block text-center">
+                    <div class="d-flex justify-content-center">
+                        <div class="icon d-flex align-items-center justify-content-center">
+                            <span class="flaticon-car"></span>
+                        </div>
+                    </div>
+                    <div class="media-body p-2 mt-2">
+                        <h3 class="heading mb-3">Services Haut Debit</h3>
+                        <p>Bénéficiez d'une connexion internet rapide et fiable pour vos événements.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 d-flex align-self-stretch ftco-animate">
+                <div class="media block-6 services py-4 d-block text-center">
+                    <div class="d-flex justify-content-center">
+                        <div class="icon d-flex align-items-center justify-content-center">
+                            <span class="flaticon-spa"></span>
+                        </div>
+                    </div>
+                    <div class="media-body p-2 mt-2">
+                        <h3 class="heading mb-3">Support 24/7</h3>
+                        <p>Notre équipe est disponible 24/7 pour répondre à vos besoins pendant vos événements.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div id="header" style="margin:20px;">
+    <h1 style=" text-align:center;font-size:3rem;">GALLERIE</h1>
+</div>
+<br><br>
+<div class="container page-top">
+    <div class="row">
+        <div th:each="event : ${eventList}" class="col-lg-3 col-md-4 col-xs-6 thumb">
+            <div class="postcard dark blue">
+                <a th:href="@{'/images/' + ${event.chemin_image}}" class="fancybox" rel="ligthbox">
+                    <img class="postcard__img zoom img-fluid" th:src="@{'/images/' + ${event.chemin_image}}" alt="Image Title" />
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div style="margin:20px;">
+    <h1 style=" text-align:center;font-size:3rem;">NOTRE EQUIPE</h1>
+</div>
+<section class="ftco-section testimony-section bg-light">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 ftco-animate">
+                <div class="row ftco-animate">
+                    <div class="col-md-12">
+                        <div class="carousel-testimony owl-carousel ftco-owl">
+                            <div class="item">
+                                <div class="testimony-wrap py-4 pb-5">
+                                    <div class="user-img mb-4" style="background-image: url(style/images/person_1.jpg)">
+                                        <span class="quote d-flex align-items-center justify-content-center">
+                                            <i class="icon-quote-left"></i>
+                                        </span>
+                                    </div>
+                                    <div class="text text-center">
+                                        <p class="mb-4">Organiser des événements dans cet espace a grandement amélioré notre productivité. L'environnement est propice et les installations sont parfaites pour nos besoins.</p>
+                                        <p class="name">Alexandra Dupont</p>
+                                        <span class="position">Organisatrice d'événements</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="testimony-wrap py-4 pb-5">
+                                    <div class="user-img mb-4" style="background-image: url(style/images/person_2.jpg)">
+                                        <span class="quote d-flex align-items-center justify-content-center">
+                                            <i class="icon-quote-left"></i>
+                                        </span>
+                                    </div>
+                                    <div class="text text-center">
+                                        <p class="mb-4">Cet espace est idéal pour des réunions d'affaires et des événements professionnels. La connexion Internet est rapide et fiable, facilitant nos réunions virtuelles.</p>
+                                        <p class="name">Thomas Martin</p>
+                                        <span class="position">Chef de projet</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="testimony-wrap py-4 pb-5">
+                                    <div class="user-img mb-4" style="background-image: url(style/images/person_3.jpg)">
+                                        <span class="quote d-flex align-items-center justify-content-center">
+                                            <i class="icon-quote-left"></i>
+                                        </span>
+                                    </div>
+                                    <div class="text text-center">
+                                        <p class="mb-4">Nous avons pu organiser des événements de grande envergure grâce à ces espaces flexibles. Parfait pour les événements corporatifs et les séminaires.</p>
+                                        <p class="name">Sophie Lefevre</p>
+                                        <span class="position">Responsable événementiel</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="testimony-wrap py-4 pb-5">
+                                    <div class="user-img mb-4" style="background-image: url(style/images/person_4.jpg)">
+                                        <span class="quote d-flex align-items-center justify-content-center">
+                                            <i class="icon-quote-left"></i>
+                                        </span>
+                                    </div>
+                                    <div class="text text-center">
+                                        <p class="mb-4">Les installations ici sont parfaites pour nos besoins d'événements spéciaux. Je recommande cet endroit à tous ceux qui cherchent un lieu adapté et professionnel.</p>
+                                        <p class="name">Julien Besson</p>
+                                        <span class="position">Organisateur d'événements</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="testimony-wrap py-4 pb-5">
+                                    <div class="user-img mb-4" style="background-image: url(style/images/person_5.jpg)">
+                                        <span class="quote d-flex align-items-center justify-content-center">
+                                            <i class="icon-quote-left"></i>
+                                        </span>
+                                    </div>
+                                    <div class="text text-center">
+                                        <p class="mb-4">L'ambiance ici est parfaite pour des événements professionnels. L'équipe est accueillante et tous les équipements nécessaires sont disponibles.</p>
+                                        <p class="name">Marie Durand</p>
+                                        <span class="position">Organisatrice d'événements</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<footer class="ftco-footer ftco-bg-dark ftco-section">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-md">
+                <div class="ftco-footer-widget mb-4">
+                    <h2 class="ftco-heading-2">EventWorks</h2>
+                    <p>Votre partenaire idéal pour des événements mémorables. Transformez les espaces en expériences extraordinaires.</p>
+                    <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
+                        <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
+                        <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
+                        <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="ftco-footer-widget mb-4 ml-md-5">
+                    <h2 class="ftco-heading-2">Liens Utiles</h2>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="py-2 d-block">Événements à Venir</a></li>
+                        <li><a href="#" class="py-2 d-block">Services</a></li>
+                        <li><a href="#" class="py-2 d-block">Réserver un Événement</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="ftco-footer-widget mb-4">
+                    <h2 class="ftco-heading-2">Confidentialité</h2>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="py-2 d-block">Conditions de Service</a></li>
+                        <li><a href="#" class="py-2 d-block">Politique de Confidentialité</a></li>
+                        <li><a href="#" class="py-2 d-block">Nous Contacter</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="ftco-footer-widget mb-4">
+                    <h2 class="ftco-heading-2">Une Question?</h2>
+                    <div class="block-23 mb-3">
+                        <ul>
+                            <li><a href="#"><span class="icon icon-envelope"></span><span class="text">info@eventworks.com</span></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>&copy;<script>document.write(new Date().getFullYear());</script> Tous droits réservés | EventWorks</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<!-- loader -->
+<div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+
+
+<script th:src="@{/style/js/jquery.min.js}"></script>
+<script th:src="@{/style/js/jquery-migrate-3.0.1.min.js}"></script>
+<script th:src="@{/style/js/popper.min.js}"></script>
+<script th:src="@{/style/js/bootstrap.min.js}"></script>
+<script th:src="@{/style/js/jquery.easing.1.3.js}"></script>
+<script th:src="@{/style/js/jquery.waypoints.min.js}"></script>
+<script th:src="@{/style/js/jquery.stellar.min.js}"></script>
+<script th:src="@{/style/js/owl.carousel.min.js}"></script>
+<script th:src="@{/style/js/jquery.magnific-popup.min.js}"></script>
+<script th:src="@{/style/js/aos.js}"></script>
+<script th:src="@{/style/js/jquery.animateNumber.min.js}"></script>
+<script th:src="@{/style/js/bootstrap-datepicker.js}"></script>
+<script th:src="@{/style/js/jquery.timepicker.min.js}"></script>
+<script th:src="@{/style/js/scrollax.min.js}"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+<script th:src="@{/style/js/google-map.js}"></script>
+<script th:src="@{/style/js/main.js}"></script>
+
+</body>
+</html>
