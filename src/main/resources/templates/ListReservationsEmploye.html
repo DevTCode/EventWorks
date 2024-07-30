@@ -1,0 +1,229 @@
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>EventWorks</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{style/images/favicon.jpg}">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,700,700i" rel="stylesheet">
+
+    <link rel="stylesheet" th:href="@{/style/css/open-iconic-bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/style/css/animate.css}">
+
+    <link rel="stylesheet" th:href="@{/style/css/owl.carousel.min.css}">
+    <link rel="stylesheet" th:href="@{/style/css/owl.theme.default.min.css}">
+    <link rel="stylesheet" th:href="@{/style/css/magnific-popup.css}">
+
+    <link rel="stylesheet" th:href="@{/style/css/aos.css}">
+
+    <link rel="stylesheet" th:href="@{/style/css/ionicons.min.css}">
+
+    <link rel="stylesheet" th:href="@{/style/css/bootstrap-datepicker.css}">
+    <link rel="stylesheet" th:href="@{/style/css/jquery.timepicker.css}">
+
+
+    <link rel="stylesheet" th:href="@{/style/css/flaticon.css}">
+    <link rel="stylesheet" th:href="@{/style/css/icomoon.css}">
+    <link rel="stylesheet" th:href="@{/style/css/style.css}">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+    <div class="container">
+        <a class="navbar-brand" href="#">EventWorks</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="oi oi-menu"></span> Menu
+        </button>
+        <div class="collapse navbar-collapse" id="ftco-nav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active"><a th:href="@{/client}" class="nav-link">Home</a></li>
+                <li class="nav-item"><a th:href="@{/showEvents}" class="nav-link">Evénements</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/showReservations}">Reservations</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-user-circle"></i> Mon compte
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <div th:each="lu : ${listcnx}">
+                            <h6 class="dropdown-header" style="text-align:center;color:brown">Connecté en tant que</h6>
+                            <span class="dropdown-item-text" th:text="${lu.username}" style="text-align:center"></span>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" th:href="@{/editProfile/{id}(id=${lu.id})}">Modifier le mot de passe</a>
+                        </div>
+                        <a class="dropdown-item" th:href="@{/logout}">Se déconnecter</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-toggle="modal" data-target="#notificationsModal">
+                        <i class="fa fa-bell"></i> Notifications <span class="badge badge-danger" th:text="${notifications.size()}"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- END nav -->
+
+<!-- Modal pour afficher les notifications -->
+
+<div class="modal fade" id="notificationsModal" tabindex="-1" role="dialog" aria-labelledby="notificationsModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="notificationsModalLabel">Notifications</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ul>
+                    <li th:each="notification : ${notifications}" th:text="${notification}"></li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="hero-wrap" style="background-image: url('https://img.freepik.com/premium-photo/restaurant-table-setting-service-with-reserved-card_53876-55934.jpg?w=900">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text d-flex align-itemd-end justify-content-center">
+            <div class="col-md-9 ftco-animate text-center d-flex align-items-end justify-content-center">
+                <div class="text">
+                    <p class="breadcrumbs mb-2"><span class="mr-2"><a th:href="@{/client}">Home</a></span> <span>Reservations</span></p>
+                    <h1 class="mb-4 bread">Mes Reservations</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Section de réservations -->
+<section class="ftco-section bg-light">
+    <div class="container">
+        <div class="row">
+            <table class="table table-hover">
+                <thead class="thead-primary">
+                <tr>
+                    <th>Date du réservation</th>
+                    <th>Statut du réservation</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="reservation : ${reservations}">
+                    <td th:text="${reservation.dateReservation}"></td>
+                    <td>
+                        <span th:if="${reservation.status == 'en attente'}" th:text="${reservation.status}" style="color:red"></span>
+                        <span th:if="${reservation.status == 'confirmé'}" style="color:green" th:text="${reservation.status}"></span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+    <div class="d-flex justify-content-center align-items-center">
+        <ul class="pagination">
+            <li class="page-item" th:classappend="${currentPage == 0} ? disabled">
+                <a class="page-link" th:href="@{/showReservations(page=0)}">First</a>
+            </li>
+            <li class="page-item" th:classappend="${currentPage == 0} ? disabled">
+                <a class="page-link" th:href="@{/showReservations(page=${currentPage - 1})}">Previous</a>
+            </li>
+            <li th:each="page : ${#numbers.sequence(0, totalPages - 1)}" th:classappend="${currentPage == page} ? active">
+                <a class="page-link" th:href="@{/showReservations(page=${page})}" th:text="${page + 1}"></a>
+            </li>
+            <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? disabled">
+                <a class="page-link" th:href="@{/showReservations(page=${currentPage + 1})}">Next</a>
+            </li>
+            <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? disabled">
+                <a class="page-link" th:href="@{/showReservations(page=${totalPages - 1})}">Last</a>
+            </li>
+        </ul>
+    </div>
+
+</section>
+
+
+<footer class="ftco-footer ftco-bg-dark ftco-section">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-md">
+                <div class="ftco-footer-widget mb-4">
+                    <h2 class="ftco-heading-2">EventWorks</h2>
+                    <p>Votre partenaire idéal pour des événements mémorables. Transformez les espaces en expériences extraordinaires.</p>
+                    <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
+                        <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
+                        <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
+                        <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="ftco-footer-widget mb-4 ml-md-5">
+                    <h2 class="ftco-heading-2">Liens Utiles</h2>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="py-2 d-block">Événements à Venir</a></li>
+                        <li><a href="#" class="py-2 d-block">Services</a></li>
+                        <li><a href="#" class="py-2 d-block">Réserver un Événement</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="ftco-footer-widget mb-4">
+                    <h2 class="ftco-heading-2">Confidentialité</h2>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="py-2 d-block">Conditions de Service</a></li>
+                        <li><a href="#" class="py-2 d-block">Politique de Confidentialité</a></li>
+                        <li><a href="#" class="py-2 d-block">Nous Contacter</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="ftco-footer-widget mb-4">
+                    <h2 class="ftco-heading-2">Une Question?</h2>
+                    <div class="block-23 mb-3">
+                        <ul>
+                            <li><a href="#"><span class="icon icon-envelope"></span><span class="text">info@eventworks.com</span></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>&copy;<script>document.write(new Date().getFullYear());</script> Tous droits réservés | EventWorks</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<!-- loader -->
+<div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+
+
+<script th:src="@{/style/js/jquery.min.js}"></script>
+<script th:src="@{/style/js/jquery-migrate-3.0.1.min.js}"></script>
+<script th:src="@{/style/js/popper.min.js}"></script>
+<script th:src="@{/style/js/bootstrap.min.js}"></script>
+<script th:src="@{/style/js/jquery.easing.1.3.js}"></script>
+<script th:src="@{/style/js/jquery.waypoints.min.js}"></script>
+<script th:src="@{/style/js/jquery.stellar.min.js}"></script>
+<script th:src="@{/style/js/owl.carousel.min.js}"></script>
+<script th:src="@{/style/js/jquery.magnific-popup.min.js}"></script>
+<script th:src="@{/style/js/aos.js}"></script>
+<script th:src="@{/style/js/jquery.animateNumber.min.js}"></script>
+<script th:src="@{/style/js/bootstrap-datepicker.js}"></script>
+<script th:src="@{/style/js/jquery.timepicker.min.js}"></script>
+<script th:src="@{/style/js/scrollax.min.js}"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+<script th:src="@{/style/js/google-map.js}"></script>
+<script th:src="@{/style/js/main.js}"></script>
+</body>
+</html>
