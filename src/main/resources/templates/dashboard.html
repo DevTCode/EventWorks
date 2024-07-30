@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>EventWorks</title>
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{style/images/favicon.jpg}">
+    <!-- CSS Imports -->
+    <link rel="stylesheet" href="https://cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css">
+    <link rel="stylesheet" th:href="@{/style/vendors/feather/feather.css}">
+    <link rel="stylesheet" th:href="@{/style/vendors/mdi/css/materialdesignicons.min.css}">
+    <link rel="stylesheet" th:href="@{/style/vendors/ti-icons/css/themify-icons.css}">
+    <link rel="stylesheet" th:href="@{/style/vendors/typicons/typicons.css}">
+    <link rel="stylesheet" th:href="@{/style/vendors/simple-line-icons/css/simple-line-icons.css}">
+    <link rel="stylesheet" th:href="@{/style/vendors/css/vendor.bundle.base.css}">
+    <link rel="stylesheet" th:href="@{/style/vendors/datatables.net-bs4/dataTables.bootstrap4.css}">
+    <link rel="stylesheet" th:href="@{/style/js/select.dataTables.min.css}">
+    <link rel="stylesheet" th:href="@{/style/css/vertical-layout-light/style.css}">
+    <link rel="shortcut icon" th:href="@{/style/images/favicon.png}" />
+
+    <style>
+        .card-red {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .card-green {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .card-blue {
+            background-color: #d1ecf1;
+            color: #0c5460;
+        }
+        .card-yellow {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        .card-blue {
+            background-color: #d1ecf1;
+            color: #0c5460;
+        }
+          .card-pastel-purple {
+            background-color: #e8d6f5;
+            color: #6f42c1;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container-scroller">
+    <!-- Navbar -->
+    <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex align-items-top flex-row">
+        <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
+            <div class="me-3">
+                <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-bs-toggle="minimize">
+                    <span class="icon-menu"></span>
+                </button>
+            </div>
+            <div>
+                <a class="navbar-brand" href="index.html">EventWorks</a>
+            </div>
+        </div>
+        <div class="navbar-menu-wrapper d-flex align-items-top">
+            <ul class="navbar-nav">
+                <li class="nav-item font-weight-semibold d-none d-lg-block ms-0">
+                    <h1 class="welcome-text">BONJOUR, <span class="text-black fw-bold">ICHRAQ</span></h1>
+                </li>
+            </ul>
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item d-none d-lg-block">
+                    <div id="datepicker-popup" class="input-group date datepicker navbar-date-picker">
+              <span class="input-group-addon input-group-prepend border-right">
+                <span class="icon-calendar input-group-text calendar-icon"></span>
+              </span>
+                        <input type="text" class="form-control">
+                    </div>
+                </li>
+
+                <!-- User Dropdown -->
+                <li class="nav-item dropdown d-none d-lg-block user-dropdown">
+                    <a class="nav-link" id="UserDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img class="img-xs rounded-circle" th:src="@{/style/images/profile.png}">
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
+
+                        <a th:href="@{/logout}" class="dropdown-item"><i class="dropdown-item-icon mdi mdi-power text-primary me-2"></i>Se déconnecter</a>
+                    </div>
+                </li>
+            </ul>
+            <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-bs-toggle="offcanvas">
+                <span class="mdi mdi-menu"></span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="container-fluid page-body-wrapper">
+        <!-- Theme Settings Panel -->
+        <div class="theme-setting-wrapper">
+            <div id="settings-trigger"><i class="ti-settings"></i></div>
+            <div id="theme-settings" class="settings-panel">
+                <i class="settings-close ti-close"></i>
+                <p class="settings-heading">SIDEBAR SKINS</p>
+                <div class="sidebar-bg-options selected" id="sidebar-light-theme"><div class="img-ss rounded-circle bg-light border me-3"></div>Light</div>
+                <div class="sidebar-bg-options" id="sidebar-dark-theme"><div class="img-ss rounded-circle bg-dark border me-3"></div>Dark</div>
+                <p class="settings-heading mt-2">HEADER SKINS</p>
+                <div class="color-tiles mx-0 px-4">
+                    <div class="tiles success"></div>
+                    <div class="tiles warning"></div>
+                    <div class="tiles danger"></div>
+                    <div class="tiles info"></div>
+                    <div class="tiles dark"></div>
+                    <div class="tiles default"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <nav class="sidebar sidebar-offcanvas" id="sidebar">
+            <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/dash}">
+                        <i class="mdi mdi-view-dashboard menu-icon"></i>
+                        <span class="menu-title">Dashboard</span>
+                    </a>
+                </li>
+                <br>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/users}">
+                        <i class="mdi mdi-account-multiple menu-icon"></i>
+                        <span class="menu-title">Employés</span>
+                    </a>
+                </li>
+                <br>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/list}">
+                        <i class="mdi mdi-domain menu-icon"></i>
+                        <span class="menu-title">Evénements</span>
+                    </a>
+                </li>
+
+
+                <br>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/showAdminReservations}">
+                        <i class="mdi mdi-calendar-check menu-icon"></i>
+                        <span class="menu-title">Réservations</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <!-- Page Title -->
+                <div class="page-header">
+                    <h3 class="page-title">Dashboard</h3>
+
+                </div>
+
+                <!-- Content -->
+                <div class="row">
+                    <div class="col-lg-12 grid-margin stretch-card">
+
+                        <!-- Add Button -->
+
+                        <!-- Content -->
+                        <div class="row">
+                            <!-- Number of Employees -->
+                            <div class="col-lg-3 col-md-6 col-sm-6 grid-margin stretch-card">
+                                <div class="card card-blue">
+                                    <div class="card-body">
+                                        <h4 class="card-title"><i class="mdi mdi-account-multiple menu-icon"></i> Nombre des employés</h4>
+                                        <p class="card-description text-center" th:text="${numberOfEmployees}" style="font-size:20px;font-weight:bold;color:navy"></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Number of Reservations -->
+                            <div class="col-lg-3 col-md-6 col-sm-6 grid-margin stretch-card">
+                                <div class="card card-yellow">
+                                    <div class="card-body">
+                                        <h4 class="card-title"><i class="mdi mdi-calendar-check menu-icon"></i> Nombre des Réservations</h4>
+                                        <p class="card-description text-center" th:text="${numberOfReservationsForFutureEvents}" style="font-size:20px;font-weight:bold;color:grey"></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Number of Events -->
+                            <div class="col-lg-3 col-md-6 col-sm-6 grid-margin stretch-card">
+                                <div class="card card-pastel-purple">
+                                    <div class="card-body">
+                                        <h4 class="card-title"><i class="mdi mdi-domain menu-icon"></i> Nombre des événements</h4>
+                                        <p class="card-description text-center" th:text="${numberOfEvents}" style="font-size:20px;font-weight:bold;color:purple"></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Number of Postponed Events -->
+                            <div class="col-lg-3 col-md-6 col-sm-6 grid-margin stretch-card">
+                                <div class="card card-green">
+                                    <div class="card-body">
+                                        <h4 class="card-title"><i class="mdi mdi-calendar-clock menu-icon"></i> Nombre des événements reportés</h4>
+                                        <p class="card-description text-center" th:text="${numberOfPostponedEvents}" style="font-size:20px;font-weight:bold;color:green"></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Number of Canceled Events -->
+                            <div class="col-lg-3 col-md-6 col-sm-6 grid-margin stretch-card">
+                                <div class="card card-red">
+                                    <div class="card-body">
+                                        <h4 class="card-title"><i class="mdi mdi-calendar-remove menu-icon"></i> Nombre des événements annulés</h4>
+                                        <p class="card-description text-center" th:text="${numberOfCanceledEvents}" style="font-size:20px;font-weight:bold;color:black"></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+            <footer class="footer">
+                <div class="d-sm-flex justify-content-center justify-content-sm-between">
+                    <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">EventWorks</span>
+                    <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Supervised by <a href="#" target="_blank">ASSIM ICHRAQ</a> from ISMAGI</span>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <!-- Footer -->
+
+</div>
+
+<script th:src="@{/style/vendors/js/vendor.bundle.base.js}"></script>
+<script th:src="@{/style/vendors/chart.js/Chart.min.js}"></script>
+<script th:src="@{/style/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js}"></script>
+<script th:src="@{/style/vendors/progressbar.js/progressbar.min.js}"></script>
+<script th:src="@{/style/js/off-canvas.js}"></script>
+<script th:src="@{/style/js/hoverable-collapse.js}"></script>
+<script th:src="@{/style/js/template.js}"></script>
+<script th:src="@{/style/js/settings.js}"></script>
+<script th:src="@{/style/js/todolist.js}"></script>
+<script th:src="@{/style/js/dashboard.js}"></script>
+<script th:src="@{/style/js/Chart.roundedBarCharts.js}"></script>
+</body>
+
+</html>
